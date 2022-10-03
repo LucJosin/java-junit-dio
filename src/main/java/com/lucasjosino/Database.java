@@ -19,7 +19,7 @@ public class Database {
         add(new Person("Clara Doe", LocalDate.of(2013, 1, 9)));
     }};
 
-    public void OpenConnection() throws InterruptedException {
+    public void openConnection() throws InterruptedException {
         // First, check if database is already connected.
         //
         // If true, just return.
@@ -36,7 +36,7 @@ public class Database {
         System.out.println("Connected to the database.");
     }
 
-    public boolean CloseConnection() throws Exception {
+    public boolean closeConnection() throws Exception {
         // Check if database is connected.
         //
         // If true, disconnect.
@@ -51,15 +51,15 @@ public class Database {
         throw new DatabaseConnectionException("Database is not connected!");
     }
 
-    public boolean IsConnected() {
+    public boolean isConnected() {
         return isConnected;
     }
 
-    public List<Person> GetAllPerson() {
+    public List<Person> getAllPerson() {
         return persons;
     }
 
-    public void RemovePerson(int index) {
+    public void removePerson(int index) {
         try {
             persons.remove(index);
         } catch (Exception e) {
@@ -67,14 +67,14 @@ public class Database {
         }
     }
 
-    public Person GetPerson(String name) {
+    public Person getPerson(String name) {
         for (Person person : persons) {
             if (Objects.equals(person.getName(), name)) return person;
         }
         return null;
     }
 
-    public void AddPerson(Person person) {
+    public void addPerson(Person person) {
         try {
             persons.add(person);
         } catch (Exception e) {

@@ -17,19 +17,19 @@ public class DatabaseTest {
     static void Connect() {
         System.out.println(1);
         try {
-            db.OpenConnection();
+            db.openConnection();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
 
-        Assertions.assertTrue(db.IsConnected());
+        Assertions.assertTrue(db.isConnected());
     }
 
     @Test
     void databaseShouldNotBeEmpty() {
-        Assertions.assertFalse(db.GetAllPerson().isEmpty());
-        Assertions.assertEquals(4, db.GetAllPerson().size());
+        Assertions.assertFalse(db.getAllPerson().isEmpty());
+        Assertions.assertEquals(4, db.getAllPerson().size());
     }
 
     @Test
@@ -38,23 +38,23 @@ public class DatabaseTest {
         int newIndex = new Random().nextInt(4);
 
         // Remove the person using an index.
-        db.RemovePerson(newIndex);
+        db.removePerson(newIndex);
 
-        Assertions.assertEquals(4, db.GetAllPerson().size());
+        Assertions.assertEquals(4, db.getAllPerson().size());
     }
 
     @Test
     void shouldAddTwoItemsToDatabase() {
         // Add a person to the database.
-        db.AddPerson(newPerson);
+        db.addPerson(newPerson);
 
-        Assertions.assertEquals(5, db.GetAllPerson().size());
+        Assertions.assertEquals(5, db.getAllPerson().size());
     }
 
     @Test
     void shouldReturnASinglePerson() {
         // Get a single person using the name.
-        Person cPerson = db.GetPerson(newPerson.getName());
+        Person cPerson = db.getPerson(newPerson.getName());
 
         Assertions.assertEquals(newPerson.getName(), cPerson.getName());
         Assertions.assertEquals(newPerson.getBirthDate(), cPerson.getBirthDate());
@@ -64,12 +64,12 @@ public class DatabaseTest {
     @AfterAll
     static void databaseShouldDisconnect() {
         try {
-            Assertions.assertTrue(db.CloseConnection());
+            Assertions.assertTrue(db.closeConnection());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
 
-        Assertions.assertFalse(db.IsConnected());
+        Assertions.assertFalse(db.isConnected());
     }
 }
