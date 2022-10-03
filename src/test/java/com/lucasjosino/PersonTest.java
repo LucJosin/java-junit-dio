@@ -15,7 +15,7 @@ public class PersonTest {
     void hasACorrectAge() {
         Assertions.assertEquals(25, person.getAge());
     }
-    
+
     @Test
     void isUnderAge() {
         Assertions.assertFalse(person.isUnderage());
