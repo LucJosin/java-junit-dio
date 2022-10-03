@@ -2,9 +2,7 @@ package com.lucasjosino;
 
 import com.lucasjosino.database.Database;
 import com.lucasjosino.models.Person;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 import java.util.Random;
@@ -17,57 +15,61 @@ public class DatabaseTest {
 
     @BeforeAll
     static void Connect() {
+        System.out.println(1);
         try {
             db.OpenConnection();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
-    }
 
-    @Test
-    void databaseShouldBeConnected() {
         Assertions.assertTrue(db.IsConnected());
     }
 
     @Test
     void databaseShouldNotBeEmpty() {
         Assertions.assertFalse(db.GetAllPerson().isEmpty());
-
         Assertions.assertEquals(4, db.GetAllPerson().size());
     }
 
     @Test
     void shouldRemoveOneItemFromDatabase() {
-        int newIndex = new Random().nextInt(3);
+        // Get random number.
+        int newIndex = new Random().nextInt(4);
 
+        // Remove the person using an index.
         db.RemovePerson(newIndex);
 
-        Assertions.assertEquals(3, db.GetAllPerson().size());
-    }
-
-    @Test
-    void shouldAddTwoItemsToDatabase() {
-        db.AddPerson(newPerson);
         Assertions.assertEquals(4, db.GetAllPerson().size());
     }
 
     @Test
-    void shouldReturnASinglePerson() {
-        Assertions.assertEquals(newPerson, db.GetPerson(newPerson.getName()));
+    void shouldAddTwoItemsToDatabase() {
+        // Add a person to the database.
+        db.AddPerson(newPerson);
+
+        Assertions.assertEquals(5, db.GetAllPerson().size());
     }
 
     @Test
-    void databaseShouldDisconnect() {
+    void shouldReturnASinglePerson() {
+        // Get a single person using the name.
+        Person cPerson = db.GetPerson(newPerson.getName());
+
+        Assertions.assertEquals(newPerson.getName(), cPerson.getName());
+        Assertions.assertEquals(newPerson.getBirthDate(), cPerson.getBirthDate());
+        Assertions.assertEquals(newPerson.getAge(), cPerson.getAge());
+    }
+
+    @AfterAll
+    static void databaseShouldDisconnect() {
         try {
             Assertions.assertTrue(db.CloseConnection());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.exit(1);
         }
-    }
 
-    @Test
-    void databaseShouldBeDisconnected() {
         Assertions.assertFalse(db.IsConnected());
     }
 }

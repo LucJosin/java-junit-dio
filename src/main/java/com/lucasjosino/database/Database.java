@@ -43,6 +43,7 @@ public class Database {
         if (isConnected) {
             Thread.sleep(1000);
             isConnected = false;
+            System.out.println("Disconnected from the database.");
             return true;
         }
 
